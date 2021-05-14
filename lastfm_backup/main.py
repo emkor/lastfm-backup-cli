@@ -59,17 +59,18 @@ def _chunks(n: int, iterable: t.Iterable) -> t.Generator[t.Any, None, None]:
         yield chunk
 
 
-def _to_csv_row(played_track: pylast.PlayedTrack) -> t.Tuple[str, str, str]:
+def _to_csv_row(played_track: pylast.PlayedTrack) -> t.Optional[t.Tuple[str, str, str]]:
     try:
         return (dt.fromtimestamp(int(played_track.timestamp)).isoformat(), played_track.track.artist,
                 played_track.track.title)
     except (TypeError, ValueError):
         logging.warning(f"Could not parse track {played_track} as CSV row")
+        return None
 
 
 def cli_main():
     args = _parse_args()
-    logging.basicConfig(format='%(asctime)s UTC | %(levelname)s | %(message)s',
+    logging.basicConfig(format='%(asctime)s|%(levelname)s|%(message)s',
                         level=logging.DEBUG if args.debug else logging.INFO)
 
     timestamp_from = _parse_dt_into_timestamp(args.time_from) if args.time_from else None
@@ -83,12 +84,16 @@ def cli_main():
     recent_tracks_gen = pylast.User(args.user, network).get_recent_tracks(stream=True, limit=None,
                                                                           time_from=timestamp_from,
                                                                           time_to=timestamp_to)
-    logging.info(f"Requesting tracks for user {network.username} (time range limit {timestamp_from} - {timestamp_to}...")
+    logging.info(
+        f"Requesting tracks for user {network.username} with "
+        f"time range from {args.time_from} ({timestamp_from}) - {args.time_to} ({timestamp_to})...")
     for played_tracks_chunk in _chunks(n=50, iterable=recent_tracks_gen):
         with open(args.file, "a") as csv_:
             writer = csv.writer(csv_, delimiter=",", quotechar='"', quoting=csv.QUOTE_MINIMAL)
             for played_track in played_tracks_chunk:
-                writer.writerow(_to_csv_row(played_track))
+                row = _to_csv_row(played_track)
+                if row:
+                    writer.writerow(row)
         logging.info(f"Written {len(played_tracks_chunk)} tracks into {args.file} file")
     logging.info(f"Done")
 
