@@ -1,0 +1,21 @@
+[[package]]
+name = "pylast"
+version = "4.2.1"
+description = "A Python interface to Last.fm and Libre.fm"
+category = "main"
+optional = false
+python-versions = ">=3.6"
+
+[package.extras]
+tests = ["flaky", "pytest", "pytest-cov", "pytest-random-order", "pyyaml"]
+
+[metadata]
+lock-version = "1.1"
+python-versions = "^3.7"
+content-hash = "05bffcc28b0c9c56b16bdaedd3c1831e06fc2187a98f6bf59dd1cdeff1da1d63"
+
+[metadata.files]
+pylast = [
+    {file = "pylast-4.2.1-py3-none-any.whl", hash = "sha256:b3170adcd68c52ab836b376a3004a1d79b31a80ddbe4a44cee3308a59fe8c244"},
+    {file = "pylast-4.2.1.tar.gz", hash = "sha256:4757a7424ea5bae062a1b30f0e7e71d525f1ef3508ff973c74fb725a4986ff5f"},
+]
