@@ -1,5 +1,5 @@
 test: unit-test acceptance-test
-all: test
+all: test build
 
 PY3 = python3
 POETRY = poetry
@@ -16,4 +16,8 @@ acceptance-test:
 	@echo "---- Running acceptance tests ---- "
 	@$(POETRY) run pytest -ra -vv test/test_acceptance.py
 
-.PHONY: install test all unit-test acceptance-test
+build:
+	@echo "---- Build distributable ---- "
+	@$(POETRY) build
+
+.PHONY: install all test  unit-test acceptance-test build

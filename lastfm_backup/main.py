@@ -1,6 +1,7 @@
 import argparse
 import logging
 import os
+import sys
 from enum import Enum
 import typing as t
 import pylast
@@ -74,6 +75,10 @@ def cli_main():
     args = _parse_args()
     logging.basicConfig(format='%(asctime)s|%(levelname)s|%(message)s',
                         level=logging.DEBUG if args.debug else logging.INFO)
+
+    if os.path.isfile(args.file):
+        logging.warning(f"Given file {args.file} already exists")
+        sys.exit(1)
 
     timestamp_from = _parse_dt_into_timestamp(args.time_from) if args.time_from else None
     timestamp_to = _parse_dt_into_timestamp(args.time_to) if args.time_to else None
