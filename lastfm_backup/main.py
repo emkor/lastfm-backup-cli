@@ -9,7 +9,8 @@ import csv
 from datetime import datetime as dt
 
 DEFAULT_CSV_FILE = "lastfm_backup.csv"
-ACCEPTED_DT_FMT = ("%Y-%m-%d %H:%M:%S", "%Y-%m-%dT%H:%M:%S", "%Y-%m-%d %H:%M", "%Y-%m-%d")
+ACCEPTED_DT_FMT = ("%Y-%m-%d %H:%M:%S", "%Y-%m-%d %H:%M.%S", "%Y-%m-%dT%H:%M:%S", "%Y-%m-%dT%H:%M.%S",
+                   "%Y-%m-%d %H:%M", "%Y-%m-%dT%H:%M", "%Y-%m-%d")
 
 
 class EnvVar(Enum):
@@ -59,10 +60,11 @@ def _chunks(n: int, iterable: t.Iterable) -> t.Generator[t.Any, None, None]:
         yield chunk
 
 
-def _to_csv_row(played_track: pylast.PlayedTrack) -> t.Optional[t.Tuple[str, str, str]]:
+def _to_csv_row(played_track: pylast.PlayedTrack) -> t.Optional[t.Tuple[str, str, str, str]]:
     try:
-        return (dt.fromtimestamp(int(played_track.timestamp)).isoformat(), played_track.track.artist,
-                played_track.track.title)
+        scrobble_dt = dt.fromtimestamp(int(played_track.timestamp))
+        return (scrobble_dt.date().isoformat(), scrobble_dt.time().isoformat(),
+                played_track.track.artist, played_track.track.title)
     except (TypeError, ValueError):
         logging.warning(f"Could not parse track {played_track} as CSV row")
         return None
