@@ -24,7 +24,7 @@ def test_should_call_for_results(tmpdir: str):
 
     with open(test_csv_path, "r") as _actual_csv:
         first_row = _actual_csv.readline()
-    assert first_row == "2021-01-01,23:26:14,Polar Inertia,Hell Frozen Over\n", \
+    assert first_row == "2021-01-01,22:26:14,Polar Inertia,Hell Frozen Over\n", \
         f"First row: {first_row} differs from expected"
 
     with open(test_csv_path, "r") as _actual_csv:

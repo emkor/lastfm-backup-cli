@@ -7,7 +7,7 @@ import typing as t
 import pylast
 import itertools
 import csv
-from datetime import datetime as dt
+from datetime import datetime as dt, timezone as tz
 
 DEFAULT_CSV_FILE = "lastfm_backup.csv"
 ACCEPTED_DT_FMT = ("%Y-%m-%d %H:%M:%S", "%Y-%m-%d %H:%M.%S", "%Y-%m-%dT%H:%M:%S", "%Y-%m-%dT%H:%M.%S",
@@ -45,7 +45,7 @@ def _parse_args() -> argparse.Namespace:
 def _parse_dt_into_timestamp(dt_str: str) -> t.Optional[float]:
     for fmt in ACCEPTED_DT_FMT:
         try:
-            dt_val = dt.strptime(dt_str, fmt)
+            dt_val = dt.strptime(dt_str, fmt).replace(tzinfo=tz.utc)
             return int(dt_val.timestamp())
         except ValueError:
             continue
@@ -63,7 +63,7 @@ def _chunks(n: int, iterable: t.Iterable) -> t.Generator[t.Any, None, None]:
 
 def _to_csv_row(played_track: pylast.PlayedTrack) -> t.Optional[t.Tuple[str, str, str, str]]:
     try:
-        scrobble_dt = dt.fromtimestamp(int(played_track.timestamp))
+        scrobble_dt = dt.fromtimestamp(int(played_track.timestamp), tz=tz.utc)
         return (scrobble_dt.date().isoformat(), scrobble_dt.time().isoformat(),
                 played_track.track.artist, played_track.track.title)
     except (TypeError, ValueError):
@@ -98,6 +98,7 @@ def cli_main():
         with open(args.file, "a") as csv_:
             writer = csv.writer(csv_, delimiter=",", quotechar='"', quoting=csv.QUOTE_MINIMAL)
             for played_track in played_tracks_chunk:
+                logging.debug(f"Writing played track at {played_track.timestamp}: {played_track.track}")
                 row = _to_csv_row(played_track)
                 if row:
                     writer.writerow(row)
