@@ -25,6 +25,8 @@ jobs:
         run: make unit-test
       - name: Run acceptance tests
         run: make acceptance-test
+        env:
+          LASTFM_API_KEY: ${{ secrets.LASTFM_API_KEY }}
       - name: Build distributable package
         run: make build
 
