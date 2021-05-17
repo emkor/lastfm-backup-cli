@@ -20,4 +20,4 @@ build:
 	@echo "---- Build distributable ---- "
 	@$(POETRY) build
 
-.PHONY: install all test  unit-test acceptance-test build
+.PHONY: install all test unit-test acceptance-test build
