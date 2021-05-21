@@ -2,7 +2,7 @@ from datetime import datetime, timezone as tz
 
 import pytest
 
-from lastfm_backup.main import _parse_dt_into_timestamp, _chunks
+from lastfm_backup_cli.main import _parse_dt_into_timestamp, _chunks
 
 
 @pytest.mark.parametrize(("dt_str", "expected_timestamp"), [

@@ -1,10 +1,10 @@
-# lastfm-backup
+# lastfm-backup-cli
 Super-simple CLI tool for backing up Last.fm scrobbling data into CSV file
 
 ### installation
 - pre-requisites: Python 3.7 or newer, pip
-- `pip install --user lastfm-backup`
-    - or `python3 -m pip install --user lastfm-backup` if your default Python is 2.x
+- `pip install --user lastfm-backup-cli`
+    - or `python3 -m pip install --user lastfm-backup-cli` if your default Python is 2.x
 
 ### usage
 - get your LastFM API key [here](https://www.last.fm/api)

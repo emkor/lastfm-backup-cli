@@ -9,7 +9,7 @@ import itertools
 import csv
 from datetime import datetime as dt, timezone as tz
 
-DEFAULT_CSV_FILE = "lastfm_backup.csv"
+DEFAULT_CSV_FILE = "lastfm.csv"
 ACCEPTED_DT_FMT = ("%Y-%m-%d %H:%M:%S", "%Y-%m-%d %H:%M.%S", "%Y-%m-%dT%H:%M:%S", "%Y-%m-%dT%H:%M.%S",
                    "%Y-%m-%d %H:%M", "%Y-%m-%dT%H:%M", "%Y-%m-%d")
 

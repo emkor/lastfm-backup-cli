@@ -4,7 +4,7 @@ from os import path
 
 import pytest
 
-from lastfm_backup.main import EnvVar
+from lastfm_backup_cli.main import EnvVar
 
 
 @pytest.fixture(scope="module", autouse=True)
