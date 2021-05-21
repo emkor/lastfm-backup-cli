@@ -1,12 +1,16 @@
-test: unit-test acceptance-test
+test: lint unit-test acceptance-test
 all: test build
 
 PY3 = python3
 POETRY = poetry
 
 install:
-	@echo "---- Installing package in virtualenv ---- "
+	@echo "---- Installing package ---- "
 	@$(POETRY) install
+
+lint:
+	@echo "---- Running type check and linter ---- "
+	@$(POETRY) run mypy lastfm_backup_cli
 
 unit-test:
 	@echo "---- Running unit tests ---- "

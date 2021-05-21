@@ -103,7 +103,6 @@ def cli_main():
                 if row:
                     writer.writerow(row)
         logging.info(f"Written {len(played_tracks_chunk)} tracks into {args.file} file")
-    logging.info(f"Done")
 
 
 if __name__ == "__main__":
