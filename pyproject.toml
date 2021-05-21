@@ -1,9 +1,13 @@
 [tool.poetry]
 name = "lastfm-backup-cli"
-version = "0.1.0"
+version = "0.1.1"
 description = "Super-simple CLI tool for backing up Last.fm scrobbling data"
 authors = ["emkor93 <emkor93@gmail.com>"]
 license = "MIT License"
+readme = "README.md"
+homepage = "https://github.com/emkor/lastfm-backup-cli"
+repository = "https://github.com/emkor/lastfm-backup-cli"
+keywords = ["lastfm", "last.fm", "scrobble", "backup"]
 
 [tool.poetry.dependencies]
 python = "^3.7"
