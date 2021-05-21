@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "lastfm-backup-cli"
-version = "0.1.1"
+version = "0.1.2"
 description = "Super-simple CLI tool for backing up Last.fm scrobbling data"
 authors = ["emkor93 <emkor93@gmail.com>"]
 license = "MIT License"
@@ -16,6 +16,7 @@ pylast = "^4.2.1"
 [tool.poetry.dev-dependencies]
 pytest = "^6.2.4"
 mypy = "^0.812"
+black = "^21.5b1"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
@@ -23,3 +24,14 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.poetry.scripts]
 lastfm-backup = 'lastfm_backup_cli.main:cli_main'
+
+[tool.mypy]
+ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
+module = "pylast"
+ignore_missing_imports = true
+
+[tool.black]
+line-length = 120
+target-version = ['py37', 'py38', 'py39']

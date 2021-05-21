@@ -8,9 +8,14 @@ install:
 	@echo "---- Installing package ---- "
 	@$(POETRY) install
 
+clean:
+	@echo "---- Remove temporary files ---- "
+	rm -rf .mypy_cache .pytest_cache dist
+
 lint:
 	@echo "---- Running type check and linter ---- "
 	@$(POETRY) run mypy lastfm_backup_cli
+	@$(POETRY) run black lastfm_backup_cli
 
 unit-test:
 	@echo "---- Running unit tests ---- "
