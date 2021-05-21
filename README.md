@@ -11,7 +11,12 @@ Super-simple CLI tool for backing up Last.fm scrobbling data into CSV file
 - run `lastfm-backup <PATH TO BACKUP CSV FILE> --user <YOUR LASTFM USERNAME> --api-key <YOUR API KEY> --time-from <DATE OF FIRST SCROBBLE IN BACKUP FILE> --time-to <DATE OF LAST SCROBBLE IN BACKUP FILE>`
     - example: `lastfm-backup lastfm-backup-2021-01.csv --user Rezult --api-key <YOUR API KEY> --time-from 2021-01-01 --time-to 2021-01-02`
 
-- output file content will look like this:
+- output structure is:
+```csv
+<SCROBBLE DATE>,<SCROBBLE TIME (UTC)>,<ARTIST>,<TITLE>
+...
+```
+- output example:
 ```csv
 2021-04-01,10:42:53,PRO8L3M,Backstage
 2021-04-01,10:39:59,PRO8L3M,Byłem tam
