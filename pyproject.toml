@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "lastfm-backup-cli"
-version = "0.1.2"
+version = "0.2.0"
 description = "Super-simple CLI tool for backing up Last.fm scrobbling data"
 authors = ["emkor93 <emkor93@gmail.com>"]
 license = "MIT License"

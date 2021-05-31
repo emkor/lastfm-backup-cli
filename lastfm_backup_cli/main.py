@@ -45,7 +45,7 @@ def _parse_args() -> argparse.Namespace:
         f"Might be provided by env variable {EnvVar.USER.value}",
     )
     parser.add_argument(
-        "--api_key",
+        "--api-key",
         type=str,
         help=f"A Last.fm API key. Might be provided by env variable {EnvVar.API_KEY.value}",
     )
@@ -53,14 +53,14 @@ def _parse_args() -> argparse.Namespace:
         "--time-from",
         type=str,
         default=None,
-        help="Beginning timestamp of a range - only display scrobbles after this time. "
+        help="Beginning timestamp of a range - only download scrobbles after this time. "
         "Must be in UTC. Example: 2021-05-13",
     )
     parser.add_argument(
         "--time-to",
         type=str,
         default=None,
-        help="End timestamp of a range - only display scrobbles before this time. "
+        help="End timestamp of a range - only download scrobbles before this time. "
         "Must be in UTC. Example: 2021-05-15",
     )
     parser.add_argument("-d", "--debug", action="store_true", help="Enable more verbose logging")
@@ -108,9 +108,10 @@ def cli_main():
         format="%(asctime)s|%(levelname)s|%(message)s",
         level=logging.DEBUG if args.debug else logging.INFO,
     )
+    target_file = os.path.abspath(os.path.expanduser(args.file))
 
-    if os.path.isfile(args.file):
-        logging.warning(f"Given file {args.file} already exists")
+    if os.path.isfile(target_file):
+        logging.warning(f"Given output file {target_file} already exists!")
         sys.exit(1)
 
     timestamp_from = _parse_dt_into_timestamp(args.time_from) if args.time_from else None
@@ -125,18 +126,19 @@ def cli_main():
         stream=True, limit=None, time_from=timestamp_from, time_to=timestamp_to
     )
     logging.info(
-        f"Requesting tracks for user {network.username} with "
-        f"time range from {args.time_from} ({timestamp_from}) - {args.time_to} ({timestamp_to})..."
+        f"Backing up scrobbles for user {network.username} with "
+        f"time range {args.time_from} ({timestamp_from}) - {args.time_to} ({timestamp_to}) "
+        f"into {target_file}..."
     )
     for played_tracks_chunk in _chunks(n=50, iterable=recent_tracks_gen):
-        with open(args.file, "a") as csv_:
+        with open(target_file, "a") as csv_:
             writer = csv.writer(csv_, delimiter=",", quotechar='"', quoting=csv.QUOTE_MINIMAL)
             for played_track in played_tracks_chunk:
-                logging.debug(f"Writing played track at {played_track.timestamp}: {played_track.track}")
+                logging.debug(f"Writing track played at {played_track.timestamp}: {played_track.track}")
                 row = _to_csv_row(played_track)
                 if row:
                     writer.writerow(row)
-        logging.info(f"Written {len(played_tracks_chunk)} tracks into {args.file} file")
+        logging.info(f"Written {len(played_tracks_chunk)} tracks into {target_file} file")
 
 
 if __name__ == "__main__":
