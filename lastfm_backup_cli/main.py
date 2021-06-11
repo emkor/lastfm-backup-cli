@@ -122,7 +122,7 @@ def cli_main():
         username=args.user or EnvVar.get(EnvVar.USER),
     )
 
-    recent_tracks_gen = pylast.User(args.user, network).get_recent_tracks(
+    recent_tracks_gen = pylast.User(network.username, network).get_recent_tracks(
         stream=True, limit=None, time_from=timestamp_from, time_to=timestamp_to
     )
     logging.info(
