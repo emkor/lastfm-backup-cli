@@ -1,4 +1,4 @@
-# lastfm-backup-cli
+# lastfm-backup-cli ![PyPI - Python Version](https://img.shields.io/pypi/pyversions/lastfm-backup-cli) ![CI](https://github.com/emkor/lastfm-backup-cli/workflows/CI/badge.svg)
 Super-simple CLI tool for backing up Last.fm scrobbling data into CSV file
 
 ### installation
